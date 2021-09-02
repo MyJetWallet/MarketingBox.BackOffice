@@ -1,0 +1,18 @@
+{
+  "profiles": {
+    "Backoffice": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ConsoleOutputLogLevel": "Information",
+        "GRPC_PORT": "87",
+        "111x-ssl-user": "alexey.n",
+        "APP_COMPILATION_DATE": "2021-01-01 11:10:00",
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "HTTP_PORT": "8087",
+        "APP_VERSION": "1.0.0"
+      },
+      "dotnetRunMessages": "true"
+    }
+  }
+}

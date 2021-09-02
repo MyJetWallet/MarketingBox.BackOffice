@@ -1,0 +1,180 @@
+﻿@using Backoffice.Services.Partners
+
+<BaseTwoButtonsDialog 
+    Caption=@(!IsCreate ? $"{Item.Partner.AffiliateId} [{Item.Partner.GeneralInfo.Username}]" : "Create a new Partner") 
+    OnClose="OnClose" 
+    YesButtonCaption="@(IsCreate ? "Create" : "Save")"
+    NoButtonCaption="Close"
+    OnSubmit="OnSubmit">
+    
+    <table>
+    
+        <tr>
+            <td>
+                <table>
+                    <tr>
+                        <td>Username</td>
+                        <td class="float-left">
+                            @if (!IsCreate)
+                            {
+                                @Item.Partner.GeneralInfo.Username
+                            }
+                            else
+                            {
+                                <input type="text" class="form-control" @bind="Item.Partner.GeneralInfo.Username" />
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Email</td>
+                        <td class="float-left">
+                            @if (!IsCreate)
+                            {
+                                @Item.Partner.GeneralInfo.Email
+                            }
+                            else
+                            {
+                                <input type="text" class="form-control" @bind="Item.Partner.GeneralInfo.Email" />
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Created At</td>
+                        <td class="float-left">
+                            @if (!IsCreate)
+                            {
+                                @Item.Partner.GeneralInfo.CreatedAt
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Passsword</td>
+                        <td class="float-left">
+                            @if (!IsCreate)
+                            {
+                                @Item.Partner.GeneralInfo.Passsword
+                            }
+                            else
+                            {
+                                <input type="password" class="form-control" @bind="Item.Partner.GeneralInfo.Passsword" />
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Skype</td>
+                        <td class="float-left">
+                            @if (!IsCreate)
+                            {
+                                @Item.Partner.GeneralInfo.Skype
+                            }
+                            else
+                            {
+                                <input type="text" class="form-control" @bind="Item.Partner.GeneralInfo.Skype" />
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Phone</td>
+                        <td class="float-left">
+                            @if (!IsCreate)
+                            {
+                                @Item.Partner.GeneralInfo.Phone
+                            }
+                            else
+                            {
+                                <input type="text" class="form-control" @bind="Item.Partner.GeneralInfo.Phone" />
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>ZipCode</td>
+                        <td class="float-left">
+                            @if (!IsCreate)
+                            {
+                                @Item.Partner.GeneralInfo.ZipCode
+                            }
+                            else
+                            {
+                                <input type="text" class="form-control" @bind="Item.Partner.GeneralInfo.Phone" />
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Role</td>
+                        <td class="float-left">
+                            <select @bind="Item.Partner.GeneralInfo.Role">
+                                @foreach (var role in Enum.GetNames<PartnerRole>())
+                                {
+                                    <option value=@role>@role</option>
+                                }
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>State</td>
+                        <td class="float-left">
+                            <select @bind="Item.Partner.GeneralInfo.State">
+                                @foreach (var state in Enum.GetNames<PartnerState>())
+                                {
+                                    <option value=@state>@state</option>
+                                }
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Currency</td>
+                        <td class="float-left">
+                            <select @bind="Item.Partner.GeneralInfo.Currency">
+                                @foreach (var currency in Enum.GetNames<PartnerCurrency>())
+                                {
+                                    <option value=@currency>@currency</option>
+                                }
+                            </select>
+                        </td>
+                    </tr>
+                    <tr></tr>
+
+                </table>
+            </td>
+        </tr>
+    </table>
+</BaseTwoButtonsDialog>
+
+@code {
+    
+    [Parameter]
+    public PartnerItem Item { get; set; }
+    
+    [Parameter]
+    public bool IsCreate { get; set; }
+    
+    [Parameter]
+    public EventCallback OnCloseCallback { get; set; }
+    
+    [Parameter]
+    public EventCallback<PartnerItem> OnCreateCallback { get; set; }
+    
+    [Parameter]
+    public EventCallback<PartnerItem> OnUpdateCallback { get; set; }
+
+    private void OnClose()
+    {
+        OnCloseCallback.InvokeAsync();
+    }
+
+    private async Task OnSubmit()
+    {
+        if (IsCreate)
+            await OnCreateCallback.InvokeAsync(Item);
+        else
+            await OnUpdateCallback.InvokeAsync(Item);
+    }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        if (IsCreate)
+            Item = new PartnerItem()
+            {};
+    }
+}
