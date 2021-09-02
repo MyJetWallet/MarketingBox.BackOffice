@@ -1,0 +1,114 @@
+﻿@using MarketingBox.Backoffice.Abstractions.Models
+@using MarketingBox.Backoffice.Services.Partners
+
+@inject IPartnerItemManager PartnerItemManager
+@inject IToaster ToastService
+
+<Loader LoaderConfig="@LoaderConfig" />
+
+<ul class="nav float-left">
+    <li><button @onclick="OnRefresh" type="button" class="btn btn-outline-primary" style="margin: 5px; border-radius: 10px">Refresh</button></li>
+    <li><button @onclick="OnAdd" type="button" class="btn btn-outline-success" style="margin: 5px; border-radius: 10px">Add</button></li>
+</ul>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>AI</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Created at</th>
+            <th>Role</th>
+            <th>State</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var asset in PartnerList)
+        {
+            <PartnerTableRow Item="@asset" LoaderConfig="@LoaderConfig" OnDeleteCallback="Delete" />
+        }
+
+    </tbody>
+</table>
+
+@if (IsShowAdding)
+{
+    <div>
+        <PartnerDetailsDialogEdit IsCreate="true" OnCloseCallback="OnCloseAddingDialog" OnCreateCallback="OnCreate" />
+    </div>
+}
+
+
+@code {
+    private string Message { get; set; } = "-- none --";
+
+    private ILoaderConfiguration LoaderConfig { get; set; } = new LoaderConfiguration();
+
+    private bool IsShowAdding { get; set; }
+
+    private List<PartnerItem> PartnerList { get; set; } = new();
+
+    private async void OnRefresh()
+    {
+        LoaderConfig.Enable();
+
+        PartnerList = await PartnerItemManager.GetAll();
+
+        LoaderConfig.Disable();
+        await InvokeAsync(StateHasChanged);
+    }
+
+    protected override void OnInitialized()
+    {
+        OnRefresh();
+
+        base.OnInitialized();
+    }
+
+    private async Task OnAdd()
+    {
+        IsShowAdding = true;
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private void OnCloseAddingDialog()
+    {
+        IsShowAdding = false;
+        StateHasChanged();
+    }
+
+    private async void OnCreate(PartnerItem item)
+    {
+        try
+        {
+            await PartnerItemManager.Create(item);
+
+            ToastService.Info($"Partner {item.Partner.AffiliateId} is created", "Create partner");
+
+            IsShowAdding = false;
+
+            OnRefresh();
+        }
+        catch (Exception ex)
+        {
+            ToastService.Error(ex.Message, "Partner creation");
+        }
+    }
+
+    private async void Delete(PartnerItem item)
+    {
+        try
+        {
+            await PartnerItemManager.Delete(item);
+
+            ToastService.Info($"Asset {item.Partner.AffiliateId} is deleted", "Delete partner");
+
+            OnRefresh();
+        }
+        catch (Exception ex)
+        {
+            ToastService.Error(ex.Message, "Asset deletion");
+        }
+    }
+}

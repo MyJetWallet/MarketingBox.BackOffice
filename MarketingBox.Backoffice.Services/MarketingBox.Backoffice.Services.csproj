@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="DotNetCoreDecorators" Version="1.0.21" />
+      <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0-preview.7.21377.19" />
+      <PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.0-preview.7.21377.19" />
+      <PackageReference Include="MyCrm.Auth.GrpcContracts" Version="1.0.11" />
+      <PackageReference Include="MyCrm.BusinessCategories.Grpc" Version="1.0.2" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\MarketingBox.Backoffice.Abstractions\MarketingBox.Backoffice.Abstractions.csproj" />
+      <ProjectReference Include="..\MarketingBox.Backoffice.Datatypes\MarketingBox.Backoffice.Datatypes.csproj" />
+      <ProjectReference Include="..\MarketingBox.Backoffice.ReflectionSearch\MarketingBox.Backoffice.ReflectionSearch.csproj" />
+    </ItemGroup>
+
+</Project>

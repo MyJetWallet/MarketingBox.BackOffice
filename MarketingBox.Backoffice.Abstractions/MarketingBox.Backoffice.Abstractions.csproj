@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\MarketingBox.Backoffice.Datatypes\MarketingBox.Backoffice.Datatypes.csproj" />
+      <ProjectReference Include="..\MarketingBox.Backoffice.ReflectionSearch\MarketingBox.Backoffice.ReflectionSearch.csproj" />
+    </ItemGroup>
+
+
+</Project>

@@ -1,0 +1,54 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+        <Version>1.0.41</Version>
+    </PropertyGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\MarketingBox.Backoffice.Abstractions\MarketingBox.Backoffice.Abstractions.csproj" />
+      <ProjectReference Include="..\MarketingBox.Backoffice.Datatypes\MarketingBox.Backoffice.Datatypes.csproj" />
+      <ProjectReference Include="..\MarketingBox.Backoffice.ReflectionSearch\MarketingBox.Backoffice.ReflectionSearch.csproj" />
+      <ProjectReference Include="..\MarketingBox.Backoffice.Services\MarketingBox.Backoffice.Services.csproj" />
+      <ProjectReference Include="..\MarketingBox.Backoffice.TableStorage\MarketingBox.Backoffice.TableStorage.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Allegiance.Blazor.Highcharts" Version="2.0.26" />
+      <PackageReference Include="BlazorDateRangePicker" Version="3.6.0" />
+      <PackageReference Include="Blazored.Typeahead" Version="4.6.0" />
+      <PackageReference Include="BlazorInputFile" Version="0.2.0" />
+      <PackageReference Include="Blazorise.Bulma" Version="0.9.4.3" />
+      <PackageReference Include="CsvHelper" Version="27.1.1" />
+      <PackageReference Include="Finance.PciDssPublic.HttpContracts" Version="1.0.0" />
+      <PackageReference Include="Flurl.Http" Version="3.2.0" />
+      <PackageReference Include="Grpc.Net.Client" Version="2.39.0" />
+      <PackageReference Include="Highsoft.Highcharts" Version="9.1.2.2" />
+      <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.18.0" />
+      <PackageReference Include="MW.Blazor.TagSelector" Version="1.2.3" />
+      <PackageReference Include="MyTokenGeneratorUtils" Version="1.0.1" />
+      <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+      <PackageReference Include="protobuf-net.Grpc" Version="1.0.152" />
+      <PackageReference Include="Radzen.Blazor" Version="3.9.7" />
+      <PackageReference Include="SimpleTrading.BaseMetrics" Version="1.0.3" />
+      <PackageReference Include="SimpleTrading.ServiceStatusReporterConnector" Version="1.0.9" />
+      <PackageReference Include="Sotsera.Blazor.Toaster" Version="3.0.0" />
+      <PackageReference Include="Syncfusion.Blazor" Version="19.2.0.59" />
+      <PackageReference Include="MySettingsReader" Version="1.2.1" />
+      <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.0-preview.7.21377.19" />
+      <PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.0-preview.7.21377.19" />
+      <PackageReference Include="MyJetWallet.Sdk.Service" Version="1.5.5" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Shared\Bo\BaseDialog.razor" />
+      <_ContentIncludedByDefault Remove="Shared\Bo\TwoButtonsDialog.razor" />
+      <_ContentIncludedByDefault Remove="Components\Swap\Settings\SwapSettingsComponent.razor" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="Dockerfile">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
+</Project>

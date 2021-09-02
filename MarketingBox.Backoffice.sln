@@ -1,0 +1,70 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A6F3FFCA-EFE7-4627-8A11-1358CF4FA127}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\ci-test.yml = .github\workflows\ci-test.yml
+		.github\workflows\notify_errors.yaml = .github\workflows\notify_errors.yaml
+		.github\workflows\release-service.yml = .github\workflows\release-service.yml
+		.github\workflows\restart-test-env.yml = .github\workflows\restart-test-env.yml
+		.github\workflows\update_nuget.yaml = .github\workflows\update_nuget.yaml
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarketingBox.Backoffice", "MarketingBox.Backoffice\MarketingBox.Backoffice.csproj", "{89430673-2DD5-4C05-B5E6-6C3843DDD5D7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarketingBox.Backoffice.Abstractions", "MarketingBox.Backoffice.Abstractions\MarketingBox.Backoffice.Abstractions.csproj", "{BAF7D987-9325-4345-AF3F-1D730C7E64FC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarketingBox.Backoffice.Datatypes", "MarketingBox.Backoffice.Datatypes\MarketingBox.Backoffice.Datatypes.csproj", "{B61814D2-5B79-4DE0-B426-42C05876DC91}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarketingBox.Backoffice.ReflectionSearch", "MarketingBox.Backoffice.ReflectionSearch\MarketingBox.Backoffice.ReflectionSearch.csproj", "{E62E1E4D-089C-4525-88A6-3AB372DCBFD4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarketingBox.Backoffice.Services", "MarketingBox.Backoffice.Services\MarketingBox.Backoffice.Services.csproj", "{75729A52-745A-4770-90EB-2E570CDBDBD2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarketingBox.Backoffice.TableStorage", "MarketingBox.Backoffice.TableStorage\MarketingBox.Backoffice.TableStorage.csproj", "{117860F4-759D-445E-8D6B-E59A14CB6CD8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarketingBox.Backoffice.Tests", "MarketingBox.Backoffice.Tests\MarketingBox.Backoffice.Tests.csproj", "{C9E4086E-8E39-4FF4-9695-1F7BB2717520}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{89430673-2DD5-4C05-B5E6-6C3843DDD5D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89430673-2DD5-4C05-B5E6-6C3843DDD5D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89430673-2DD5-4C05-B5E6-6C3843DDD5D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89430673-2DD5-4C05-B5E6-6C3843DDD5D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAF7D987-9325-4345-AF3F-1D730C7E64FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAF7D987-9325-4345-AF3F-1D730C7E64FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAF7D987-9325-4345-AF3F-1D730C7E64FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAF7D987-9325-4345-AF3F-1D730C7E64FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B61814D2-5B79-4DE0-B426-42C05876DC91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B61814D2-5B79-4DE0-B426-42C05876DC91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B61814D2-5B79-4DE0-B426-42C05876DC91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B61814D2-5B79-4DE0-B426-42C05876DC91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E62E1E4D-089C-4525-88A6-3AB372DCBFD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E62E1E4D-089C-4525-88A6-3AB372DCBFD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E62E1E4D-089C-4525-88A6-3AB372DCBFD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E62E1E4D-089C-4525-88A6-3AB372DCBFD4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75729A52-745A-4770-90EB-2E570CDBDBD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75729A52-745A-4770-90EB-2E570CDBDBD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75729A52-745A-4770-90EB-2E570CDBDBD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75729A52-745A-4770-90EB-2E570CDBDBD2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{117860F4-759D-445E-8D6B-E59A14CB6CD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{117860F4-759D-445E-8D6B-E59A14CB6CD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{117860F4-759D-445E-8D6B-E59A14CB6CD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{117860F4-759D-445E-8D6B-E59A14CB6CD8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9E4086E-8E39-4FF4-9695-1F7BB2717520}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9E4086E-8E39-4FF4-9695-1F7BB2717520}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9E4086E-8E39-4FF4-9695-1F7BB2717520}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9E4086E-8E39-4FF4-9695-1F7BB2717520}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {245BBFDA-B7EE-4B55-BB1C-F2F7DC76097A}
+	EndGlobalSection
+EndGlobal
