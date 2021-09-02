@@ -31,7 +31,7 @@ jobs:
       run: ls
 
     - name: Publish Service
-      run: dotnet publish ./Backoffice/Backoffice.csproj --configuration Release /p:AssemblyVersion=${GITHUB_REF#refs/tags/} --output ./publish-api
+      run: dotnet publish ./MarketingBox.Backoffice/MarketingBox.Backoffice.csproj --configuration Release /p:AssemblyVersion=${GITHUB_REF#refs/tags/} --output ./publish-api
 
     - name: Check Service dir
       run: ls ./publish-api
@@ -48,9 +48,9 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
         path: ./publish-api
         registry: docker.pkg.github.com
-        repository: ${{ secrets.ORG_NAME }}/myjetwallet.adminpanel/myjetwallet.adminpanel
+        repository: ${{ secrets.ORG_NAME }}/marketingbox/backoffice
         tag_with_ref: true
-        build_args: app_version=myjetwallet.adminpanel:${{ steps.extract_branch.outputs.branch }},app_compilation_date=${{ steps.current-time.outputs.formattedTime }}
+        build_args: app_version=backoffice:${{ steps.extract_branch.outputs.branch }},app_compilation_date=${{ steps.current-time.outputs.formattedTime }}
 
     - name: Publish image ST
       uses: docker/build-push-action@v1
@@ -59,9 +59,9 @@ jobs:
         password: ${{ secrets.ST_DOCKER_PASSWORD }}
         path: ./publish-api
         registry: simpletrading.azurecr.io
-        repository: spot/myjetwallet.adminpanel
+        repository: marketingbox/backoffice
         tag_with_ref: true
-        build_args: app_version=myjetwallet.adminpanel:${{ steps.extract_branch.outputs.branch }},app_compilation_date=${{ steps.current-time.outputs.formattedTime }}
+        build_args: app_version=backoffice:${{ steps.extract_branch.outputs.branch }},app_compilation_date=${{ steps.current-time.outputs.formattedTime }}
 
   update_version:
     needs: build
@@ -74,8 +74,8 @@ jobs:
         ref: uat        
         token: ${{ secrets.UAT_GIT_TOKEN }}
     - run: |
-        pattern=myjetwallet.adminpanel:.*$
-        imagename=myjetwallet.adminpanel:${GITHUB_REF#refs/tags/}
+        pattern=backoffice:.*$
+        imagename=backoffice:${GITHUB_REF#refs/tags/}
         reg=$"s/${pattern}/${imagename}/g"
         echo $reg
         find . -type f -name "deployment.*" -print0 -exec sed -i -r $reg {} \;

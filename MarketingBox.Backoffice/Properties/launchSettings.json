@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "Backoffice": {
+    "MarketingBox.Backoffice": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {

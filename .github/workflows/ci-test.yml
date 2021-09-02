@@ -32,7 +32,7 @@ jobs:
       run: ls
 
     - name: Publish Service
-      run: dotnet publish --no-build ./Backoffice/Backoffice.csproj --configuration Release --output ./publish-api
+      run: dotnet publish --no-build ./MarketingBox.Backoffice/MarketingBox.Backoffice.csproj --configuration Release --output ./publish-api
 
     - name: Check Service dir
       run: ls ./publish-api
@@ -44,9 +44,9 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
         path: ./publish-api
         registry: docker.pkg.github.com
-        repository: ${{ secrets.ORG_NAME }}/myjetwallet.adminpanel/myjetwallet.adminpanel-test
+        repository: ${{ secrets.ORG_NAME }}/marketingbox/backoffice-test
         tags: latest
-        build_args: app_version=myjetwallet.adminpanel-test:latest,app_compilation_date=${{ steps.current-time.outputs.formattedTime }}
+        build_args: app_version=backoffice-test:latest,app_compilation_date=${{ steps.current-time.outputs.formattedTime }}
 
     - name: Publish image ST
       uses: docker/build-push-action@v1
@@ -55,10 +55,10 @@ jobs:
         password: ${{ secrets.ST_DOCKER_PASSWORD }}
         path: ./publish-api
         registry: simpletrading.azurecr.io
-        repository: spot/myjetwallet.adminpanel-test
+        repository: marketingbox/backoffice-test
         tags: latest
         add_git_labels: true
-        build_args: app_version=myjetwallet.adminpanel-test:latest,app_compilation_date=${{ steps.current-time.outputs.formattedTime }}
+        build_args: app_version=backoffice-test:latest,app_compilation_date=${{ steps.current-time.outputs.formattedTime }}
 
   restart:
     runs-on: ubuntu-latest    
@@ -69,4 +69,4 @@ jobs:
       env:
         KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA__ST_TEST }}
         NAMESPACE: ${{ secrets.KUBE_TEST_NAMESPACE }}
-        POD: admin-panel
+        POD: marketing-box-backoffice
