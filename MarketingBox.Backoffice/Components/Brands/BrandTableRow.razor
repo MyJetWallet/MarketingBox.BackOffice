@@ -1,0 +1,125 @@
+﻿@using MarketingBox.Backoffice.Abstractions.Models
+@using MarketingBox.Backoffice.Services.Brands
+
+@inject IToaster ToastService;
+@inject IBrandItemManager BrandItemManager
+
+<tr>
+    <th>@Item.Brand.Id</th>
+    <th>@Item.Brand.Name</th>
+
+    <td>
+        <ul class="nav">
+            <li><button type="button" class="btn-outline-info btn" @onclick="ShowDetails" >Details</button></li>
+            <li><button type="button" class="btn-outline-warning btn" @onclick="ShowEdit" >Edit</button></li>
+            <li><button type="button" class="btn-outline-danger btn" @onclick="ShowDelete">Delete</button></li>
+        </ul>
+    </td>
+</tr>
+
+@if (IsShowDetails)
+{
+    <BrandDetailsDialog Item="@Item" OnCloseCallback="OnCloseDialog" />
+}
+
+@if (IsShowEdit)
+{
+    <div>
+        <BrandDetailsDialogEdit Item="@Item" IsCreate="false" OnCloseCallback="OnCloseEditDialog" OnUpdateCallback="OnUpdate" />
+    </div>
+}
+
+@if (IsShowDelete)
+{
+    <div>
+        <BaseTwoButtonsDialog
+            Caption=@($"Delete brand {Item.Brand.Id} [{Item.Brand.Name}]")
+            OnClose="OnCloseDeleteDialog"
+            YesButtonCaption="Delete"
+            NoButtonCaption="Cancel"
+            OnSubmit="DeleteItem">
+            
+            <h3 class="alert-warning">Are you sure you want to delete the brand <b>@Item.Brand.Id [@Item.Brand.Name]?</b></h3>
+            
+        </BaseTwoButtonsDialog>
+    </div>
+}
+
+@code {
+    
+    [Parameter]
+    public BrandItem Item { get; set; }
+
+    [Parameter]
+    public ILoaderConfiguration LoaderConfig { get; set; }
+    
+    [Parameter]
+    public EventCallback<BrandItem> OnDeleteCallback { get; set; }
+    
+    private bool IsShowDetails { get; set; }
+    
+    private bool IsShowEdit { get; set; }
+    
+    private bool IsShowDelete { get; set; }
+
+
+    private void OnCloseDialog()
+    {
+        IsShowDetails = false;
+        StateHasChanged();
+    }
+
+    private void ShowDetails()
+    {
+        IsShowDetails = true;
+        StateHasChanged();
+    }
+
+    private void ShowEdit()
+    {
+        IsShowEdit = true;
+        StateHasChanged();
+    }
+
+    private void OnCloseEditDialog()
+    {
+        IsShowEdit = false;
+        StateHasChanged();
+    }
+    
+    private async void OnUpdate(BrandItem asset)
+    {
+        try
+        {
+            await BrandItemManager.Update(asset);
+
+            IsShowEdit = false;
+
+            await InvokeAsync(StateHasChanged);
+        }
+        catch (Exception ex)
+        {
+            ToastService.Error(ex.Message, "Edit brand");
+        }
+    }
+
+
+    private void OnCloseDeleteDialog()
+    {
+        IsShowDelete = false;
+        StateHasChanged();
+    }
+
+
+    private async Task DeleteItem()
+    {
+        IsShowDelete = false;
+        await OnDeleteCallback.InvokeAsync(Item);
+    }
+
+    private void ShowDelete()
+    {
+        IsShowDelete = true;
+        StateHasChanged();
+    }
+}

@@ -4,6 +4,7 @@ using MarketingBox.Backoffice.Abstractions.Bo;
 using MarketingBox.Backoffice.Mocks;
 using MarketingBox.Backoffice.Services;
 using MarketingBox.Backoffice.Services.Backoffice;
+using MarketingBox.Backoffice.Services.Brands;
 using MarketingBox.Backoffice.Services.Partners;
 using MarketingBox.Backoffice.TableStorage;
 using MyCrm.Auth.GrpcContracts;
@@ -17,6 +18,11 @@ namespace MarketingBox.Backoffice.Modules
             builder
                 .RegisterType<PartnerItemManager>()
                 .As<IPartnerItemManager>()
+                .SingleInstance();
+
+            builder
+                .RegisterType<BrandItemManager>()
+                .As<IBrandItemManager>()
                 .SingleInstance();
 
             RegisterGrpcService(builder);

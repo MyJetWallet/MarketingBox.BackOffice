@@ -1,0 +1,30 @@
+﻿@using MarketingBox.Backoffice.Services.Brands
+
+
+<BaseOneButtonsDialog Caption=@($"{Item.Brand.Id} [{Item.Brand.Name}]") OnClose="OnClose" ButtonCaption="Close">
+    <table>
+        <tr>
+            <td>
+                <h3>Brand</h3>
+                <table>
+                    <tr><td>Id</td><td class="float-left">@Item.Brand.Id</td></tr>
+                    <tr><td>Name</td><td class="float-left">@Item.Brand.Name</td></tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</BaseOneButtonsDialog>
+
+@code {
+
+    [Parameter]
+    public BrandItem Item { get; set; }
+
+    [Parameter]
+    public EventCallback OnCloseCallback { get; set; }
+
+    private void OnClose()
+    {
+        OnCloseCallback.InvokeAsync();
+    }
+}

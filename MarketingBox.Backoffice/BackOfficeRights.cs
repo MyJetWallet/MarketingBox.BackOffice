@@ -5,6 +5,8 @@ namespace MarketingBox.Backoffice
     public static class Menu
     {
         public const string Partners = "Partners";
+
+        public const string Brands = "Brands";
     }
     
     public static class Actions
@@ -45,6 +47,7 @@ namespace MarketingBox.Backoffice
         private static readonly List<NavsItem> MenuItems = new()
         {
             NavsItem.Create("Partners", "Partners", "list-rich", Menu.Partners),
+            NavsItem.Create("Brands", "Brands", "list-rich", Menu.Brands),
 
         };
         
