@@ -29,6 +29,23 @@ namespace MarketingBox.Backoffice.Services.Partners
                         Username = "TestUser",
                         ZipCode = "414141"
                     },
+                    Bank = new PartnerBank()
+                    {
+                        Swift = "x-xxxx-xxxxx",
+                        BankName = "SomeBank",
+                        AccountNumber = "1234567890",
+                        BankAddress = "Some address",
+                        BeneficiaryAddress = "Address of Ban",
+                        BeneficiaryName = "Ben",
+                        Iban = "x-xxx-xxxxxxx"
+                    },
+                    Company = new PartnerCompany()
+                    {
+                        Address = "Some address",
+                        Name = "Company name",
+                        RegNumber = "111223414",
+                        VatId = "1231434534564"
+                    },
                     AffiliateId = 1
                 }
             }

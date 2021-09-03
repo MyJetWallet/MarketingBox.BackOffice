@@ -1,102 +1,56 @@
 ﻿@using MarketingBox.Backoffice.Services.Partners
 
-<BaseTwoButtonsDialog 
-    Caption=@(!IsCreate ? $"{Item.Partner.AffiliateId} [{Item.Partner.GeneralInfo.Username}]" : "Create a new Partner") 
-    OnClose="OnClose" 
-    YesButtonCaption="@(IsCreate ? "Create" : "Save")"
-    NoButtonCaption="Close"
-    OnSubmit="OnSubmit">
-    
+<BaseTwoButtonsDialog Caption=@(!IsCreate ? $"{Item.Partner.AffiliateId} [{Item.Partner.GeneralInfo.Username}]" : "Create a new Partner")
+                      OnClose="OnClose"
+                      YesButtonCaption="@(IsCreate ? "Create" : "Save")"
+                      NoButtonCaption="Close"
+                      OnSubmit="OnSubmit">
+
     <table>
-    
+
         <tr>
             <td>
+                <h3>General Info</h3>
                 <table>
                     <tr>
                         <td>Username</td>
                         <td class="float-left">
-                            @if (!IsCreate)
-                            {
-                                @Item.Partner.GeneralInfo.Username
-                            }
-                            else
-                            {
-                                <input type="text" class="form-control" @bind="Item.Partner.GeneralInfo.Username" />
-                            }
+                            <input type="text" class="form-control" @bind="Item.Partner.GeneralInfo.Username"/>
                         </td>
                     </tr>
                     <tr>
                         <td>Email</td>
                         <td class="float-left">
-                            @if (!IsCreate)
-                            {
-                                @Item.Partner.GeneralInfo.Email
-                            }
-                            else
-                            {
-                                <input type="text" class="form-control" @bind="Item.Partner.GeneralInfo.Email" />
-                            }
+                            <input type="text" class="form-control" @bind="Item.Partner.GeneralInfo.Email"/>
                         </td>
                     </tr>
                     <tr>
                         <td>Created At</td>
                         <td class="float-left">
-                            @if (!IsCreate)
-                            {
-                                @Item.Partner.GeneralInfo.CreatedAt
-                            }
                         </td>
                     </tr>
                     <tr>
                         <td>Passsword</td>
                         <td class="float-left">
-                            @if (!IsCreate)
-                            {
-                                @Item.Partner.GeneralInfo.Passsword
-                            }
-                            else
-                            {
-                                <input type="password" class="form-control" @bind="Item.Partner.GeneralInfo.Passsword" />
-                            }
+                            <input type="password" class="form-control" @bind="Item.Partner.GeneralInfo.Passsword"/>
                         </td>
                     </tr>
                     <tr>
                         <td>Skype</td>
                         <td class="float-left">
-                            @if (!IsCreate)
-                            {
-                                @Item.Partner.GeneralInfo.Skype
-                            }
-                            else
-                            {
-                                <input type="text" class="form-control" @bind="Item.Partner.GeneralInfo.Skype" />
-                            }
+                            <input type="text" class="form-control" @bind="Item.Partner.GeneralInfo.Skype"/>
                         </td>
                     </tr>
                     <tr>
                         <td>Phone</td>
                         <td class="float-left">
-                            @if (!IsCreate)
-                            {
-                                @Item.Partner.GeneralInfo.Phone
-                            }
-                            else
-                            {
-                                <input type="text" class="form-control" @bind="Item.Partner.GeneralInfo.Phone" />
-                            }
+                            <input type="text" class="form-control" @bind="Item.Partner.GeneralInfo.Phone"/>
                         </td>
                     </tr>
                     <tr>
                         <td>ZipCode</td>
                         <td class="float-left">
-                            @if (!IsCreate)
-                            {
-                                @Item.Partner.GeneralInfo.ZipCode
-                            }
-                            else
-                            {
-                                <input type="text" class="form-control" @bind="Item.Partner.GeneralInfo.Phone" />
-                            }
+                            <input type="text" class="form-control" @bind="Item.Partner.GeneralInfo.Phone"/>
                         </td>
                     </tr>
                     <tr>
@@ -137,23 +91,120 @@
                 </table>
             </td>
         </tr>
+        <tr>
+            <td>
+                <h3>Company</h3>
+                <table>
+                    <tr>
+                        <td>Address</td>
+                        <td class="float-left">
+                            <input type="text" class="form-control" @bind="Item.Partner.Company.Address" />
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Name</td>
+                        <td class="float-left">
+                            <input type="text" class="form-control" @bind="Item.Partner.Company.Name" />
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>RegNumber</td>
+                        <td class="float-left">
+                            <input type="text" class="form-control" @bind="Item.Partner.Company.RegNumber" />
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>VatId</td>
+                        <td class="float-left">
+                            <input type="text" class="form-control" @bind="Item.Partner.Company.VatId" />
+                        </td>
+                    </tr>
+
+
+                    <tr></tr>
+
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h3>Bank</h3>
+                <table>
+                    <tr>
+                        <td>Beneficiary Address</td>
+                        <td class="float-left">
+                            <input type="text" class="form-control" @bind="Item.Partner.Bank.BeneficiaryAddress" />
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Beneficiary Name</td>
+                        <td class="float-left">
+                            <input type="text" class="form-control" @bind="Item.Partner.Bank.BeneficiaryName" />
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Bank Address</td>
+                        <td class="float-left">
+                            <input type="text" class="form-control" @bind="Item.Partner.Bank.BankAddress" />
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Bank Name</td>
+                        <td class="float-left">
+                            <input type="text" class="form-control" @bind="Item.Partner.Bank.BankName" />
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Account Number</td>
+                        <td class="float-left">
+                            <input type="text" class="form-control" @bind="Item.Partner.Bank.AccountNumber" />
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Iban</td>
+                        <td class="float-left">
+                            <input type="text" class="form-control" @bind="Item.Partner.Bank.Iban" />
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Swift</td>
+                        <td class="float-left">
+                            <input type="text" class="form-control" @bind="Item.Partner.Bank.Swift" />
+                        </td>
+                    </tr>
+
+
+                    <tr></tr>
+
+                </table>
+            </td>
+        </tr>
     </table>
 </BaseTwoButtonsDialog>
 
 @code {
-    
+
     [Parameter]
     public PartnerItem Item { get; set; }
-    
+
     [Parameter]
     public bool IsCreate { get; set; }
-    
+
     [Parameter]
     public EventCallback OnCloseCallback { get; set; }
-    
+
     [Parameter]
     public EventCallback<PartnerItem> OnCreateCallback { get; set; }
-    
+
     [Parameter]
     public EventCallback<PartnerItem> OnUpdateCallback { get; set; }
 
@@ -175,6 +226,6 @@
         base.OnInitialized();
         if (IsCreate)
             Item = new PartnerItem()
-            {};
+            { };
     }
 }
