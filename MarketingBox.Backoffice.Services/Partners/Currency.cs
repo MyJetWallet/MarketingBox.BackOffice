@@ -1,6 +1,6 @@
 ﻿namespace MarketingBox.Backoffice.Services.Partners
 {
-    public enum PartnerCurrency
+    public enum Currency
     {
         USD,
         EUR,

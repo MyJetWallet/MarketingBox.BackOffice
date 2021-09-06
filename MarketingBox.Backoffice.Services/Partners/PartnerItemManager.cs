@@ -19,7 +19,7 @@ namespace MarketingBox.Backoffice.Services.Partners
                     GeneralInfo = new PartnerGeneralInfo()
                     {
                         CreatedAt = DateTime.UtcNow,
-                        Currency = PartnerCurrency.EUR,
+                        Currency = Currency.EUR,
                         Email = "some.e@simpl.net",
                         Passsword = "********",
                         Phone = "747474",

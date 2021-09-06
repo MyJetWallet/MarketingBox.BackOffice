@@ -4,7 +4,10 @@ using MarketingBox.Backoffice.Abstractions.Bo;
 using MarketingBox.Backoffice.Mocks;
 using MarketingBox.Backoffice.Services;
 using MarketingBox.Backoffice.Services.Backoffice;
+using MarketingBox.Backoffice.Services.Boxes;
 using MarketingBox.Backoffice.Services.Brands;
+using MarketingBox.Backoffice.Services.CampaignBoxes;
+using MarketingBox.Backoffice.Services.Campaigns;
 using MarketingBox.Backoffice.Services.Partners;
 using MarketingBox.Backoffice.TableStorage;
 using MyCrm.Auth.GrpcContracts;
@@ -23,6 +26,21 @@ namespace MarketingBox.Backoffice.Modules
             builder
                 .RegisterType<BrandItemManager>()
                 .As<IBrandItemManager>()
+                .SingleInstance();
+
+            builder
+                .RegisterType<CampaignItemManager>()
+                .As<ICampaignItemManager>()
+                .SingleInstance();
+
+            builder
+                .RegisterType<CampaignBoxItemManager>()
+                .As<ICampaignBoxItemManager>()
+                .SingleInstance();
+
+            builder
+                .RegisterType<BoxItemManager>()
+                .As<IBoxItemManager>()
                 .SingleInstance();
 
             RegisterGrpcService(builder);

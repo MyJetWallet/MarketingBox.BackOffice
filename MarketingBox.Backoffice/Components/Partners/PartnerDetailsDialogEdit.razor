@@ -1,4 +1,5 @@
 ﻿@using MarketingBox.Backoffice.Services.Partners
+@using Currency = MarketingBox.Backoffice.Services.Partners.Currency
 
 <BaseTwoButtonsDialog Caption=@(!IsCreate ? $"{Item.Partner.AffiliateId} [{Item.Partner.GeneralInfo.Username}]" : "Create a new Partner")
                       OnClose="OnClose"
@@ -79,7 +80,7 @@
                         <td>Currency</td>
                         <td class="float-left">
                             <select @bind="Item.Partner.GeneralInfo.Currency">
-                                @foreach (var currency in Enum.GetNames<PartnerCurrency>())
+                                @foreach (var currency in Enum.GetNames<Currency>())
                                 {
                                     <option value=@currency>@currency</option>
                                 }

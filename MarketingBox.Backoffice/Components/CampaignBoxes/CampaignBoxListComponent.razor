@@ -1,0 +1,119 @@
+﻿@using MarketingBox.Backoffice.Abstractions.Models
+@using MarketingBox.Backoffice.Services.Boxes
+@using MarketingBox.Backoffice.Services.CampaignBoxes
+
+@inject ICampaignBoxItemManager CampaignBoxItemManager
+@inject IToaster ToastService
+
+<Loader LoaderConfig="@LoaderConfig" />
+
+<ul class="nav float-left">
+    <li><button @onclick="OnRefresh" type="button" class="btn btn-outline-primary" style="margin: 5px; border-radius: 10px">Refresh</button></li>
+    <li><button @onclick="OnAdd" type="button" class="btn btn-outline-success" style="margin: 5px; border-radius: 10px">Add</button></li>
+</ul>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Campaign Id</th>
+            <th>Box Id</th>
+            <th>Cap Type</th>
+            <th>Daily Cap Value</th>
+            <th>Enable Traffic</th>
+            <th>Priority</th>
+            <th>Weight</th>
+            <th>Country</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in List)
+        {
+            <CampaignBoxTableRow BoxItem="@BoxItem" Item="@item" LoaderConfig="@LoaderConfig" OnDeleteCallback="Delete" />
+        }
+
+    </tbody>
+</table>
+
+@if (IsShowAdding)
+{
+    <div>
+        <CampaignBoxDetailsDialogEdit BoxItem="@BoxItem" IsCreate="true" OnCloseCallback="OnCloseAddingDialog" OnCreateCallback="OnCreate" />
+    </div>
+}
+
+
+@code {
+    private string Message { get; set; } = "-- none --";
+
+    private ILoaderConfiguration LoaderConfig { get; set; } = new LoaderConfiguration();
+
+    private bool IsShowAdding { get; set; }
+
+    private List<CampaignBoxItem> List { get; set; } = new();
+
+    [Parameter]
+    public BoxItem BoxItem { get; set; }
+
+    private async void OnRefresh()
+    {
+        LoaderConfig.Enable();
+
+        List = await CampaignBoxItemManager.GetAllForBox(BoxItem.Box.Id);
+
+        LoaderConfig.Disable();
+        await InvokeAsync(StateHasChanged);
+    }
+
+    protected override void OnInitialized()
+    {
+        OnRefresh();
+
+        base.OnInitialized();
+    }
+
+    private async Task OnAdd()
+    {
+        IsShowAdding = true;
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private void OnCloseAddingDialog()
+    {
+        IsShowAdding = false;
+        StateHasChanged();
+    }
+
+    private async void OnCreate(CampaignBoxItem item)
+    {
+        try
+        {
+            await CampaignBoxItemManager.Create(item);
+
+            ToastService.Info($"CampaignBox {item.CampaignBox.CampaignId} is created", "Create CampaignBox");
+
+            IsShowAdding = false;
+
+            OnRefresh();
+        }
+        catch (Exception ex)
+        {
+            ToastService.Error(ex.Message, "CampaignBox creation");
+        }
+    }
+
+    private async void Delete(CampaignBoxItem item)
+    {
+        try
+        {
+            await CampaignBoxItemManager.Delete(item);
+
+            ToastService.Info($"CampaignBox {item.CampaignBox.CampaignId} is deleted", "Delete CampaignBox");
+
+            OnRefresh();
+        }
+        catch (Exception ex)
+        {
+            ToastService.Error(ex.Message, "CampaignBox deletion");
+        }
+    }
+}

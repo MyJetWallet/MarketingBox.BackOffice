@@ -1,0 +1,131 @@
+﻿@using MarketingBox.Backoffice.Abstractions.Models
+@using MarketingBox.Backoffice.Services.Boxes
+
+@inject IToaster ToastService;
+@inject IBoxItemManager BoxItemManager
+@inject NavigationManager NavManager
+
+<tr>
+    <th>@Item.Box.Id</th>
+    <th>@Item.Box.Name</th>
+
+    <td>
+        <ul class="nav">
+            <li><button type="button" class="btn-outline-info btn" @onclick="ShowDetails">Details</button></li>
+            <li><button type="button" class="btn-outline-warning btn" @onclick="ShowEdit">Edit</button></li>
+            <li><button type="button" class="btn-outline-danger btn" @onclick="ShowDelete">Delete</button></li>
+            <li><button @onclick="()=>EditRows(Item.Box.Id)" type="button" class="btn btn-outline-success">Edit Rows</button></li>
+        </ul>
+    </td>
+</tr>
+
+@if (IsShowDetails)
+{
+    <BoxDetailsDialog Item="@Item" OnCloseCallback="OnCloseDialog" />
+}
+
+@if (IsShowEdit)
+{
+    <div>
+        <BoxDetailsDialogEdit Item="@Item" IsCreate="false" OnCloseCallback="OnCloseEditDialog" OnUpdateCallback="OnUpdate" />
+    </div>
+}
+
+@if (IsShowDelete)
+{
+    <div>
+        <BaseTwoButtonsDialog Caption=@($"Delete brand {Item.Box.Id} [{Item.Box.Name}]")
+                              OnClose="OnCloseDeleteDialog"
+                              YesButtonCaption="Delete"
+                              NoButtonCaption="Cancel"
+                              OnSubmit="DeleteItem">
+
+            <h3 class="alert-warning">Are you sure you want to delete the brand <b>@Item.Box.Id [@Item.Box.Name]?</b></h3>
+
+        </BaseTwoButtonsDialog>
+    </div>
+}
+
+@code {
+
+    [Parameter]
+    public BoxItem Item { get; set; }
+
+    [Parameter]
+    public ILoaderConfiguration LoaderConfig { get; set; }
+
+    [Parameter]
+    public EventCallback<BoxItem> OnDeleteCallback { get; set; }
+
+    private bool IsShowDetails { get; set; }
+
+    private bool IsShowEdit { get; set; }
+
+    private bool IsShowDelete { get; set; }
+
+
+    private void EditRows(long id)
+    {
+        NavManager.NavigateTo($"/Boxes/{id}/CampaignBoxes");
+    }
+
+    private void OnCloseDialog()
+    {
+        IsShowDetails = false;
+        StateHasChanged();
+    }
+
+    private void ShowDetails()
+    {
+        IsShowDetails = true;
+        StateHasChanged();
+    }
+
+    private void ShowEdit()
+    {
+        IsShowEdit = true;
+        StateHasChanged();
+    }
+
+    private void OnCloseEditDialog()
+    {
+        IsShowEdit = false;
+        StateHasChanged();
+    }
+
+    private async void OnUpdate(BoxItem item)
+    {
+        try
+        {
+            await BoxItemManager.Update(item);
+
+            IsShowEdit = false;
+
+            await InvokeAsync(StateHasChanged);
+        }
+        catch (Exception ex)
+        {
+            ToastService.Error(ex.Message, "Edit box");
+        }
+    }
+
+
+    private void OnCloseDeleteDialog()
+    {
+        IsShowDelete = false;
+        StateHasChanged();
+    }
+
+
+    private async Task DeleteItem()
+    {
+        IsShowDelete = false;
+        await OnDeleteCallback.InvokeAsync(Item);
+    }
+
+    private void ShowDelete()
+    {
+        IsShowDelete = true;
+        StateHasChanged();
+    }
+}

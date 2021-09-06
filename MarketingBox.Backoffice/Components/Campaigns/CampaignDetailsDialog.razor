@@ -1,0 +1,50 @@
+﻿@using MarketingBox.Backoffice.Services.Campaigns
+
+
+<BaseOneButtonsDialog Caption=@($"{Item.Campaign.Id} [{Item.Campaign.Name}]") OnClose="OnClose" ButtonCaption="Close">
+    <table>
+        <tr>
+            <td>
+                <h3>Brand</h3>
+                <table>
+                    <tr><td>Id</td><td class="float-left">@Item.Campaign.Brand.Id</td></tr>
+                    <tr><td>Name</td><td class="float-left">@Item.Campaign.Brand.Name</td></tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h3>Payout</h3>
+                <table>
+                    <tr><td>Amount</td><td class="float-left">@Item.Campaign.Payout.Amount</td></tr>
+                    <tr><td>Currency</td><td class="float-left">@Item.Campaign.Payout.Currency</td></tr>
+                    <tr><td>Plan</td><td class="float-left">@Item.Campaign.Payout.Plan</td></tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h3>Revenue</h3>
+                <table>
+                    <tr><td>Amount</td><td class="float-left">@Item.Campaign.Revenue.Amount</td></tr>
+                    <tr><td>Currency</td><td class="float-left">@Item.Campaign.Revenue.Currency</td></tr>
+                    <tr><td>Plan</td><td class="float-left">@Item.Campaign.Revenue.Plan</td></tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</BaseOneButtonsDialog>
+
+@code {
+
+    [Parameter]
+    public CampaignItem Item { get; set; }
+
+    [Parameter]
+    public EventCallback OnCloseCallback { get; set; }
+
+    private void OnClose()
+    {
+        OnCloseCallback.InvokeAsync();
+    }
+}

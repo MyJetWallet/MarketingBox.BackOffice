@@ -1,0 +1,73 @@
+﻿@using MarketingBox.Backoffice.Services.Boxes
+
+<BaseTwoButtonsDialog Caption=@(!IsCreate ? $"{Item.Box.Id} [{Item.Box.Name}]" : "Create a new Box")
+                      OnClose="OnClose"
+                      YesButtonCaption="@(IsCreate ? "Create" : "Save")"
+                      NoButtonCaption="Close"
+                      OnSubmit="OnSubmit">
+
+    <table>
+
+        <tr>
+            <td>
+                <h3>Box</h3>
+                <table>
+                    <tr>
+                        <td>Id</td>
+                        <td class="float-left">
+                            <input type="text" class="form-control" @bind="Item.Box.Id"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Name</td>
+                        <td class="float-left">
+                            <input type="text" class="form-control" @bind="Item.Box.Name"/>
+                        </td>
+                    </tr>
+                    <tr></tr>
+
+                </table>
+            </td>
+        </tr>
+
+    </table>
+</BaseTwoButtonsDialog>
+
+@code {
+
+    [Parameter]
+    public BoxItem Item { get; set; }
+
+    [Parameter]
+    public bool IsCreate { get; set; }
+
+    [Parameter]
+    public EventCallback OnCloseCallback { get; set; }
+
+    [Parameter]
+    public EventCallback<BoxItem> OnCreateCallback { get; set; }
+
+    [Parameter]
+    public EventCallback<BoxItem> OnUpdateCallback { get; set; }
+
+    private void OnClose()
+    {
+        OnCloseCallback.InvokeAsync();
+    }
+
+    private async Task OnSubmit()
+    {
+        if (IsCreate)
+            await OnCreateCallback.InvokeAsync(Item);
+        else
+            await OnUpdateCallback.InvokeAsync(Item);
+    }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        if (IsCreate)
+            Item = new BoxItem()
+            { };
+    }
+}

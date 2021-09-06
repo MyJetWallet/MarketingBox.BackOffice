@@ -7,6 +7,10 @@ namespace MarketingBox.Backoffice
         public const string Partners = "Partners";
 
         public const string Brands = "Brands";
+
+        public const string Campaigns = "Campaigns";
+        
+        public const string Boxes = "Boxes";
     }
     
     public static class Actions
@@ -48,7 +52,8 @@ namespace MarketingBox.Backoffice
         {
             NavsItem.Create("Partners", "Partners", "list-rich", Menu.Partners),
             NavsItem.Create("Brands", "Brands", "list-rich", Menu.Brands),
-
+            NavsItem.Create("Campaigns", "Campaigns", "list-rich", Menu.Campaigns),
+            NavsItem.Create("Boxes", "Boxes", "list-rich", Menu.Boxes),
         };
         
         public static IEnumerable<NavsItem> GenerateMenuItems() => MenuItems;

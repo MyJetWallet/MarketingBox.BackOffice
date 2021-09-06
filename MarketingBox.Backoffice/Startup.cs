@@ -16,6 +16,7 @@ using Prometheus;
 using SimpleTrading.BaseMetrics;
 using SimpleTrading.ServiceStatusReporterConnector;
 using Sotsera.Blazor.Toaster.Core.Models;
+using Syncfusion.Blazor;
 
 namespace MarketingBox.Backoffice
 {
@@ -41,6 +42,7 @@ namespace MarketingBox.Backoffice
             services.AddHttpContextAccessor();
             services.AddScoped<MyHttpContextAccessor>();
             services.AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>();
+            services.AddAntDesign();
 
             services.AddToaster(config =>
             {

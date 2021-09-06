@@ -1,0 +1,39 @@
+﻿@using MarketingBox.Backoffice.Services.CampaignBoxes
+@using MarketingBox.Backoffice.Services.Boxes
+
+
+<BaseOneButtonsDialog Caption=@($"{BoxItem.Box.Id} - {BoxItem.Box.Name} [{Item.CampaignBox.CampaignId}]") OnClose="OnClose" ButtonCaption="Close">
+    <table>
+        <tr>
+            <td>
+                <table>
+                    <tr><td>Campaign Id</td><td class="float-left">@Item.CampaignBox.CampaignId</td></tr>
+                    <tr><td>Box Id</td><td class="float-left">@Item.CampaignBox.BoxId</td></tr>
+                    <tr><td>Cap Type</td><td class="float-left">@Item.CampaignBox.CapType</td></tr>
+                    <tr><td>Daily Cap Value</td><td class="float-left">@Item.CampaignBox.DailyCapValue</td></tr>
+                    <tr><td>Enable Traffic</td><td class="float-left">@Item.CampaignBox.EnableTraffic</td></tr>
+                    <tr><td>Priority</td><td class="float-left">@Item.CampaignBox.Priority</td></tr>
+                    <tr><td>Weight</td><td class="float-left">@Item.CampaignBox.Weight</td></tr>
+                    <tr><td>Country</td><td class="float-left">(@Item.CampaignBox.Country.Code) @Item.CampaignBox.Country.Name</td></tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</BaseOneButtonsDialog>
+
+@code {
+
+    [Parameter]
+    public BoxItem BoxItem { get; set; }
+
+    [Parameter]
+    public CampaignBoxItem Item { get; set; }
+
+    [Parameter]
+    public EventCallback OnCloseCallback { get; set; }
+
+    private void OnClose()
+    {
+        OnCloseCallback.InvokeAsync();
+    }
+}

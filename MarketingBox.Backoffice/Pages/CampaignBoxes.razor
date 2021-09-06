@@ -1,0 +1,21 @@
+﻿@page "/Boxes/{Id:long}/CampaignBoxes"
+@using MarketingBox.Backoffice.Services.Boxes
+
+@inject IBoxItemManager BoxItemManager
+
+<div>
+    <CampaignBoxListComponent BoxItem="@Item"/>
+</div>
+
+@code {
+    [Parameter]
+    public long Id { get; set; }
+
+    public BoxItem Item { get; set; }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        Item = BoxItemManager.Get(Id);
+    }
+}

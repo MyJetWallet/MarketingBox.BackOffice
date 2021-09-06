@@ -29,7 +29,7 @@ namespace MarketingBox.Backoffice.Services.Partners
         public string ZipCode { get; set; }
         public PartnerRole Role { get; set; }
         public PartnerState State { get; set; }
-        public PartnerCurrency Currency { get; set; }
+        public Currency Currency { get; set; }
         public DateTime CreatedAt { get; set; }
     }
 

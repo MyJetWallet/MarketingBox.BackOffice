@@ -1,0 +1,173 @@
+﻿@using MarketingBox.Backoffice.Services.CampaignBoxes
+@using MarketingBox.Backoffice.Services.Boxes
+@using MarketingBox.Backoffice.Services
+
+<BaseTwoButtonsDialog Caption=@(!IsCreate ? $"{Item.CampaignBox.BoxId} [{BoxItem.Box.Name}]" : "Create a new campaign box")
+                      OnClose="OnClose"
+                      YesButtonCaption="@(IsCreate ? "Create" : "Save")"
+                      NoButtonCaption="Close"
+                      OnSubmit="OnSubmit">
+
+    <table>
+
+        <tr>
+            <td>
+                <table>
+                    <tr>
+                        <td>Campaign Id</td>
+                        <td class="float-left">
+                            <input type="text" class="form-control" @bind="Item.CampaignBox.CampaignId" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>EnableTraffic</td>
+                        <td class="float-left">
+                            <input type="checkbox" class="form-control" @bind="Item.CampaignBox.EnableTraffic" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Priority</td>
+                        <td class="float-left">
+                            <input type="number" class="form-control" @bind="Item.CampaignBox.Priority" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Weight</td>
+                        <td class="float-left">
+                            <input type="number" class="form-control" @bind="Item.CampaignBox.Weight" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Country</td>
+                        <td class="float-left">
+                            <select @bind="CountryCode">
+                                @foreach (var value in CountryManager.GetCountries())
+                                {
+                                    <option value=@value.Key>@value.Value</option>
+                                }
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>CapType</td>
+                        <td class="float-left">
+                            <select @bind="Item.CampaignBox.CapType">
+                                @foreach (var value in Enum.GetNames<CapType>())
+                                {
+                                    <option value=@value>@value</option>
+                                }
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Daily Cap Value</td>
+                        <td class="float-left">
+                            <input type="number" class="form-control" @bind="Item.CampaignBox.DailyCapValue" />
+                        </td>
+                    </tr>
+                    <tr></tr>
+
+                </table>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <h3>Activity Hours</h3>
+                <table>
+                    @for (int i = 0; i < Item.CampaignBox.ActivityHours.Length; i++)
+                    {
+                        var local = i;
+                        <tr>
+                            <td>Day</td>
+                            <td class="float-left">
+                                @Item.CampaignBox.ActivityHours[local].Day
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Is Active</td>
+                            <td class="float-left">
+                                <EditForm Model="this">
+                                    <InputCheckbox @bind-Value="Item.CampaignBox.ActivityHours[local].IsActive" />
+                                </EditForm>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>From</td>
+                            <td class="float-left">
+                                <TimePicker TValue="DateTime?" Format='@("hh:mm")' @bind-Value="Item.CampaignBox.ActivityHours[local].From" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>From</td>
+                            <td class="float-left">
+                                <TimePicker TValue="DateTime?" Format='@("hh:mm")' @bind-Value="Item.CampaignBox.ActivityHours[local].To" />
+                            </td>
+                        </tr>
+                    }
+
+                    <tr></tr>
+
+                </table>
+            </td>
+        </tr>
+
+    </table>
+</BaseTwoButtonsDialog>
+
+@code {
+
+    [Parameter]
+    public BoxItem BoxItem { get; set; }
+
+    [Parameter]
+    public CampaignBoxItem Item { get; set; }
+
+    [Parameter]
+    public bool IsCreate { get; set; }
+
+    [Parameter]
+    public EventCallback OnCloseCallback { get; set; }
+
+    [Parameter]
+    public EventCallback<CampaignBoxItem> OnCreateCallback { get; set; }
+
+    [Parameter]
+    public EventCallback<CampaignBoxItem> OnUpdateCallback { get; set; }
+
+    private string CountryCode { get; set; }
+
+    private void OnClose()
+    {
+        OnCloseCallback.InvokeAsync();
+    }
+
+    private async Task OnSubmit()
+    {
+        Item.CampaignBox.Country = new Country(CountryCode, CountryManager.GetCountryName(CountryCode));
+        if (IsCreate)
+            await OnCreateCallback.InvokeAsync(Item);
+        else
+            await OnUpdateCallback.InvokeAsync(Item);
+    }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        if (IsCreate)
+            Item = new CampaignBoxItem()
+            {
+                CampaignBox = new CampaignBox()
+                {
+                    BoxId = BoxItem.Box.Id
+                }
+            };
+        else
+        {
+            CountryCode = Item.CampaignBox.Country.Code;
+        }
+    }
+}

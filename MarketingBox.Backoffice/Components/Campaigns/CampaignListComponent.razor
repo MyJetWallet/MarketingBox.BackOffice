@@ -1,0 +1,113 @@
+﻿@using MarketingBox.Backoffice.Abstractions.Models
+@using MarketingBox.Backoffice.Services.Campaigns
+
+@inject ICampaignItemManager CampaignItemManager
+@inject IToaster ToastService
+
+<Loader LoaderConfig="@LoaderConfig" />
+
+<ul class="nav float-left">
+    <li><button @onclick="OnRefresh" type="button" class="btn btn-outline-primary" style="margin: 5px; border-radius: 10px">Refresh</button></li>
+    <li><button @onclick="OnAdd" type="button" class="btn btn-outline-success" style="margin: 5px; border-radius: 10px">Add</button></li>
+</ul>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Brand</th>
+            <th>Status</th>
+            <th>Privacy</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in List)
+        {
+            <CampaignTableRow Item="@item" LoaderConfig="@LoaderConfig" OnDeleteCallback="Delete" />
+        }
+
+    </tbody>
+</table>
+
+@if (IsShowAdding)
+{
+    <div>
+        <CampaignDetailsDialogEdit IsCreate="true" OnCloseCallback="OnCloseAddingDialog" OnCreateCallback="OnCreate" />
+    </div>
+}
+
+
+@code {
+    private string Message { get; set; } = "-- none --";
+
+    private ILoaderConfiguration LoaderConfig { get; set; } = new LoaderConfiguration();
+
+    private bool IsShowAdding { get; set; }
+
+    private List<CampaignItem> List { get; set; } = new();
+
+    private async void OnRefresh()
+    {
+        LoaderConfig.Enable();
+
+        List = await CampaignItemManager.GetAll();
+
+        LoaderConfig.Disable();
+        await InvokeAsync(StateHasChanged);
+    }
+
+    protected override void OnInitialized()
+    {
+        OnRefresh();
+
+        base.OnInitialized();
+    }
+
+    private async Task OnAdd()
+    {
+        IsShowAdding = true;
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private void OnCloseAddingDialog()
+    {
+        IsShowAdding = false;
+        StateHasChanged();
+    }
+
+    private async void OnCreate(CampaignItem item)
+    {
+        try
+        {
+            await CampaignItemManager.Create(item);
+
+            ToastService.Info($"Campaign {item.Campaign.Id} is created", "Create campaign");
+
+            IsShowAdding = false;
+
+            OnRefresh();
+        }
+        catch (Exception ex)
+        {
+            ToastService.Error(ex.Message, "campaign creation");
+        }
+    }
+
+    private async void Delete(CampaignItem item)
+    {
+        try
+        {
+            await CampaignItemManager.Delete(item);
+
+            ToastService.Info($"Campaign {item.Campaign.Id} is deleted", "Delete campaign");
+
+            OnRefresh();
+        }
+        catch (Exception ex)
+        {
+            ToastService.Error(ex.Message, "campaign deletion");
+        }
+    }
+}

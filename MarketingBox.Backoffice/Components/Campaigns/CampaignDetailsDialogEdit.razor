@@ -1,0 +1,174 @@
+﻿@using MarketingBox.Backoffice.Services.Campaigns
+
+<BaseTwoButtonsDialog Caption=@(!IsCreate ? $"{Item.Campaign.Id} [{Item.Campaign.Name}]" : "Create a new Campaign")
+                      OnClose="OnClose"
+                      YesButtonCaption="@(IsCreate ? "Create" : "Save")"
+                      NoButtonCaption="Close"
+                      OnSubmit="OnSubmit">
+
+    <table>
+        <tr>
+            <td>
+                <h3>Campaign</h3>
+                <table>
+                    <tr>
+                        <td>Name</td>
+                        <td class="float-left">
+                            <input type="text" class="form-control" @bind="Item.Campaign.Name" />
+                        </td>
+                    </tr>
+                    <tr></tr>
+
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h3>Brand</h3>
+                <table>
+                    <tr>
+                        <td>Id</td>
+                        <td class="float-left">
+                            <input type="text" class="form-control" @bind="Item.Campaign.Brand.Id" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Name</td>
+                        <td class="float-left">
+                            <input type="text" class="form-control" @bind="Item.Campaign.Brand.Name" />
+                        </td>
+                    </tr>
+                    <tr></tr>
+
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h3>Payout</h3>
+                <table>
+                    <tr>
+                        <td>Amount</td>
+                        <td class="float-left">
+                            <input type="text" class="form-control" @bind="Item.Campaign.Payout.Amount" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Currency</td>
+                        <td class="float-left">
+                            <input type="text" class="form-control" @bind="Item.Campaign.Payout.Currency" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Plan</td>
+                        <td class="float-left">
+                            <input type="text" class="form-control" @bind="Item.Campaign.Payout.Plan" />
+                        </td>
+                    </tr>
+                    <tr></tr>
+
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h3>Revenue</h3>
+                <table>
+                    <tr>
+                        <td>Amount</td>
+                        <td class="float-left">
+                            <input type="text" class="form-control" @bind="Item.Campaign.Revenue.Amount" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Currency</td>
+                        <td class="float-left">
+                            <input type="text" class="form-control" @bind="Item.Campaign.Revenue.Currency" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Plan</td>
+                        <td class="float-left">
+                            <input type="text" class="form-control" @bind="Item.Campaign.Revenue.Plan" />
+                        </td>
+                    </tr>
+                    <tr></tr>
+
+                </table>
+            </td>
+        </tr>
+        <tr>
+        <td>
+            <h3>Misc</h3>
+            <table>
+                <tr>
+                    <td>Status</td>
+                    <td class="float-left">
+                        <select @bind="Item.Campaign.Status">
+                            @foreach (var value in Enum.GetNames<CampaignStatus>())
+                            {
+                                <option value=@value>@value</option>
+                            }
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Status</td>
+                    <td class="float-left">
+                        <select @bind="Item.Campaign.Privacy">
+                            @foreach (var value in Enum.GetNames<CampaignPrivacy>())
+                            {
+                                <option value=@value>@value</option>
+                            }
+                        </select>
+                    </td>
+                </tr>
+
+                <tr></tr>
+
+            </table>
+        </td>
+        </tr>
+
+    </table>
+</BaseTwoButtonsDialog>
+
+@code {
+
+    [Parameter]
+    public CampaignItem Item { get; set; }
+
+    [Parameter]
+    public bool IsCreate { get; set; }
+
+    [Parameter]
+    public EventCallback OnCloseCallback { get; set; }
+
+    [Parameter]
+    public EventCallback<CampaignItem> OnCreateCallback { get; set; }
+
+    [Parameter]
+    public EventCallback<CampaignItem> OnUpdateCallback { get; set; }
+
+    private void OnClose()
+    {
+        OnCloseCallback.InvokeAsync();
+    }
+
+    private async Task OnSubmit()
+    {
+        if (IsCreate)
+            await OnCreateCallback.InvokeAsync(Item);
+        else
+            await OnUpdateCallback.InvokeAsync(Item);
+    }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        if (IsCreate)
+            Item = new CampaignItem()
+            { };
+    }
+}
