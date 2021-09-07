@@ -22,7 +22,9 @@
                     <tr>
                         <td>EnableTraffic</td>
                         <td class="float-left">
-                            <input type="checkbox" class="form-control" @bind="Item.CampaignBox.EnableTraffic" />
+                            <EditForm Model="this">
+                                <InputCheckbox @bind-Value="Item.CampaignBox.EnableTraffic" />
+                            </EditForm>
                         </td>
                     </tr>
                     <tr>
