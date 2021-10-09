@@ -37,7 +37,7 @@
       <PackageReference Include="MySettingsReader" Version="1.2.1" />
       <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.0-rc.1.21451.13" />
       <PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.0-rc.1.21451.13" />
-      <PackageReference Include="MyJetWallet.Sdk.Service" Version="1.6.6" />
+      <PackageReference Include="MyJetWallet.Sdk.Service" Version="1.6.9" />
     </ItemGroup>
 
     <ItemGroup>
